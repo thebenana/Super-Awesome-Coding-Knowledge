@@ -1,0 +1,9 @@
+total 40
+-rw-r--r--  1 benrouec student     0 Nov  8 17:38 foo.txt
+-rw-r--r--+ 1 benrouec student  2910 Nov  7 11:29 linkedList.c
+-rw-r--r--  1 benrouec student  3296 Nov  6 11:12 linkedList.c~
+-rwxr-xr-x  1 benrouec student 13696 Nov  8 16:21 shell
+-rw-r--r--+ 1 benrouec student  3799 Nov  8 15:58 shell.c
+-rw-r--r--  1 benrouec student  3687 Nov  7 21:31 shell.c~
+-rw-r--r--+ 1 benrouec student   510 Nov  7 11:59 shell.h
+-rw-r--r--  1 benrouec student   528 Nov  7 11:37 shell.h~

@@ -1,0 +1,165 @@
+#include <stdlib.h>
+#include <stdio.h>
+#include <math.h>
+#include <string.h>
+#include <signal.h>
+#include <unistd.h>
+#include <sys/wait.h>
+
+// buffer is the input string of characters
+// args is the output array of arguments.  It has already been created with argsSize slots.
+// nargs as the number filled in that is passed back
+void parseArgs(char *buffer, char** args, int argsSize, int *nargs) {
+  char *bufArgs[argsSize];
+  char **cp;
+  char *wbuf;
+  int i, j;
+
+  wbuf = buffer;
+  bufArgs[0] = buffer;
+  args[0] = buffer;
+
+  for(cp = bufArgs; (*cp = strsep(&wbuf, " \n\t")) != NULL ;){
+    if ((*cp != '\0') && (++cp >= &bufArgs[argsSize]))
+      break;
+  }
+
+  for (j = i = 0; bufArgs[i] != NULL; i++){
+    if(strlen(bufArgs[i]) > 0)
+      args[j++] = bufArgs[i];
+  }
+
+  // Add the NULL as the end argument because we need that for later
+  *nargs = j;
+  args[j] = NULL;
+}
+
+//input redirection
+int inputRedir(char** args, int nargs) {
+  int i = 0;
+  
+  while (i < nargs) { //look for <
+    if (strcmp(args[i], "<") == 0) { //compare then return if found
+      return i;
+    }
+    i++;
+  }
+  return -1; //else
+}
+
+
+//output redirection
+int outputRedir(char** args, int nargs) {
+  int i = 0;
+ 
+  while (i < nargs) { //looks for >
+    if (strcmp(args[i], ">") == 0) { //compare then return if found
+      return i;
+    }
+    i++;
+  }
+  return -1; //else
+}
+
+void sig_handler(int sig){
+  int status;
+  int result = waitpid(-1, &status, 0);
+}
+
+void deleteAtIndex(char** args, int index) {
+  int i = index;
+  
+  while(args[i + 1] != NULL) { //deletes value at index by moving over 1
+    args[i] = args[i + 1];
+    i++;
+  }
+
+  args[i] = NULL; //this handles the last index and sets it to NULL to create an ending
+}
+
+int main() {
+
+  int bool = 0;
+  signal(SIGCHLD, sig_handler);
+  
+  while(bool == 0) {
+    printf("%s>", getcwd(0,0)); //current directory
+
+    char buffer[40]; //create buffer for input
+    fgets(buffer, 40, stdin); //prompt user
+
+    if (buffer[0] != '\n') { //prevents program from running unless text is entered
+      int buffSize = 10;
+      char* args[buffSize];
+      int nargs;
+      parseArgs(buffer, args, buffSize, &nargs);
+      
+      int boolB = 0; //background bool
+      int count = 0; //count that keeps track of args
+
+      do{ //create do while to set bool to true if it's a background process
+	if(strcmp(args[count], "&") == 0){ //check to see if NULL
+	  boolB = 1;
+	  args[count] = NULL;
+	  nargs--;
+	}
+	count++;
+      }while(args[count] != NULL);
+      
+      char inputRedArr[20]; //create char array for input
+      char outputRedArr[20]; //create char array for output
+
+      //zombie processes
+      if (args[0] == NULL) {
+	printf("\n");
+      } else if (strcmp(args[0], "exit") == 0) {
+	bool = 1;
+      } else if (strcmp(args[0], "cd") == 0) {
+	int dir = chdir(args[1]);
+	if (dir != 0) {
+	  printf("Dir not found\n");
+	}
+      } else {
+	int pid = fork();
+	if (pid == -1) {
+	  printf("Error\n");
+	} else if (pid == 0) { //child
+
+	  //Input redir check
+	  int iR = inputRedir(args, nargs);
+	  if (iR != -1) {
+	    //Redirect the input if user requests
+	    strcpy(inputRedArr, args[iR + 1]);
+	    deleteAtIndex(args, iR + 1);
+	    deleteAtIndex(args, iR);
+	    freopen(inputRedArr, "r", stdin);
+	  }
+
+	  //Output redir check
+	  int oR = outputRedir(args, nargs);
+	  if (oR != -1) {
+	    //Redirect output if user requests
+	    strcpy(outputRedArr, args[oR + 1]);
+	    deleteAtIndex(args, oR + 1);
+	    deleteAtIndex(args, oR);
+	    freopen(outputRedArr, "w", stdout);
+	  }
+
+	  int command = execvp(args[0], args); //execute command
+
+	  if(command == -1){ //if unknown command, stop process
+	    printf("Error 2\n");
+	    bool = 1;
+	  }
+
+	} else { //parent
+	  if(boolB == 0){
+	    int reap;
+	    waitpid(pid, &reap, 0);
+	  }
+	}
+      }
+    }
+  }
+  return 0;
+}
