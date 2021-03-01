@@ -1,0 +1,18 @@
+10
+Michael
+Mary
+William
+Richard
+Charles
+Joseph
+Patricia
+Linda
+Barbara
+Steven
+Michael, Mary
+Linda, Steven
+Mary, Steven
+Charles, Richard
+William, Charles
+Barbara, Joseph
+Patricia, Barbara
