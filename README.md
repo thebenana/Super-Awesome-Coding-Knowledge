@@ -1,3 +1,3 @@
-# JAVAKnowledge
+# Super Awesome Coding Knowledge (SACK)
 
-This is a compilation of my most interesting Java/C projects. Some programs include driver test code from my previous professors to verify the integrity of the code.
+This is a compilation of my most interesting programming projects. Some programs include driver test code to verify the integrity of the code.
