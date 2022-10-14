@@ -1,7 +1,5 @@
 package roueche.project3;
 
-import edu.princeton.cs.introcs.StdDraw;
-
 public abstract class FaceEmoji extends Emoji{
 
 	public FaceEmoji(double x, double y, double size) {

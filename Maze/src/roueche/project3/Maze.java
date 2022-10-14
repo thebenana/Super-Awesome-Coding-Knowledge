@@ -3,8 +3,6 @@ package roueche.project3;
 import java.util.ArrayList;
 import java.util.Collections;
 
-import edu.princeton.cs.introcs.StdDraw;
-
 public class Maze {
 	
 	private int width, height;

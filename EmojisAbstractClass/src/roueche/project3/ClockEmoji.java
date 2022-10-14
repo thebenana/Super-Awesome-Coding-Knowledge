@@ -1,7 +1,5 @@
 package roueche.project3;
 
-import edu.princeton.cs.introcs.StdDraw;
-
 public class ClockEmoji extends Emoji{
 
 	private double hour;

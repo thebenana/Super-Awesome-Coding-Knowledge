@@ -1,8 +1,5 @@
 package roueche.project1;
 
-import edu.princeton.cs.introcs.StdDraw;
-
-
 public class SnakeCode {
 	
 	private enum DIR {

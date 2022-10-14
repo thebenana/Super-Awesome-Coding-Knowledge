@@ -1,7 +1,5 @@
 package roueche.project3;
 
-import edu.princeton.cs.introcs.StdDraw;
-
 public class SurprisedFaceEmoji extends FaceEmoji {
 
 	public SurprisedFaceEmoji(double x, double y, double size) {

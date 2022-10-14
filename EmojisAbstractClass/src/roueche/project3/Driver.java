@@ -6,8 +6,6 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Scanner;
 
-import edu.princeton.cs.introcs.StdDraw;
-
 public class Driver {
 
 	public static void main(String[] args) {

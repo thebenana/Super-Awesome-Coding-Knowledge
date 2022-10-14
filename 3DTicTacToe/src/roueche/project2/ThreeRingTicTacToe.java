@@ -1,7 +1,5 @@
 package roueche.project2;
 
-import edu.princeton.cs.introcs.StdDraw;
-
 public class ThreeRingTicTacToe {
 	
 	//TODO: Declare the enumerated type called Contents here

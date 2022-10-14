@@ -5,8 +5,6 @@ import java.awt.Point;
 import java.util.ArrayList;
 import java.util.Random;
 
-import edu.princeton.cs.introcs.StdDraw;
-
 public class ConvexHullBrute {
 	
 	public static void main(String args[]) {

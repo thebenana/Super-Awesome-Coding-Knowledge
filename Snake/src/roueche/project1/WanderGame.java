@@ -3,9 +3,6 @@ package roueche.project1;
 import java.awt.Color;
 import java.util.ArrayList;
 
-import edu.princeton.cs.introcs.Draw;
-import edu.princeton.cs.introcs.DrawListener;
-
 
 public class WanderGame implements DrawListener {
 
